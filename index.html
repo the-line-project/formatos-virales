@@ -48,6 +48,35 @@
   }
   .rule strong{color:var(--white);}
 
+  .notice{
+    max-width:760px;
+    margin:32px auto 0;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-left:3px solid var(--orange);
+    border-radius:10px;
+    padding:20px 24px;
+    text-align:left;
+  }
+  .notice-label{
+    display:block;
+    font-family:'Anton',sans-serif;
+    color:var(--orange);
+    font-size:0.85rem;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    margin-bottom:10px;
+  }
+  .notice p{
+    color:var(--gray);
+    font-size:0.92rem;
+    line-height:1.6;
+  }
+  .notice p + p{margin-top:10px;}
+  .notice strong{color:var(--white);}
+  .notice .tag-mainstream{color:var(--orange);font-weight:600;}
+  .notice .tag-nicho{color:var(--white);font-weight:600;}
+
   .grid{
     display:grid;
     grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
@@ -146,6 +175,13 @@
     <div class="subtitle">Misión 10K · edición semanal</div>
     <p class="rule">Cada jueves sumamos <strong>formatos que están funcionando en Instagram</strong> para que los mires, los adaptes a tu marca personal y los pongas en práctica esta semana.</p>
   </header>
+
+  <div class="notice">
+    <span class="notice-label">Importante antes de ver los formatos</span>
+    <p>Existen dos tipos de contenido: <span class="tag-nicho">nicho</span>, el que nutre a tu audiencia, aporta valor y vende; y <span class="tag-mainstream">mainstream</span>, el que atrae audiencia nueva para que después consuma tu contenido de nicho.</p>
+    <p>Los formatos de acá abajo son <span class="tag-mainstream">mainstream</span> — pensados para conseguir <strong>alcance</strong>, no venta directa. La idea es que los combines en la semana con tu propio contenido de nicho.</p>
+    <p>Y lo más importante: <strong>no copies el video original tal cual</strong>. Adaptá el formato a tu marca personal y a tu sector.</p>
+  </div>
 
   <div class="grid" id="grid"></div>
 
