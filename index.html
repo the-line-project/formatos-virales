@@ -81,7 +81,21 @@
     display:grid;
     grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
     gap:24px;
+    margin-bottom:16px;
   }
+
+  .week-heading{
+    font-family:'Anton',sans-serif;
+    font-size:1.3rem;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    color:var(--white);
+    margin:48px 0 20px;
+    padding-top:32px;
+    border-top:1px solid var(--border);
+  }
+  .week-heading:first-of-type{border-top:none;padding-top:0;margin-top:8px;}
+  .week-heading span{color:var(--orange);}
 
   .card{
     background:var(--card);
@@ -183,25 +197,41 @@
     <p>Y lo más importante: <strong>no copies el video original tal cual</strong>. Adaptá el formato a tu marca personal y a tu sector.</p>
   </div>
 
-  <div class="grid" id="grid"></div>
+  <div id="weeks"></div>
 
   <footer>Actualizado cada miércoles · <strong>Misión 10K</strong></footer>
 
 </div>
 
 <script>
-  const REELS = [
-    "https://www.instagram.com/reels/DZ27JgqNfoB/",
-    "https://www.instagram.com/reels/DcfOxhutYkE/",
-    "https://www.instagram.com/reel/DboNDarITAi/",
-    "https://www.instagram.com/reel/Da6B8hFNa19/",
-    "https://www.instagram.com/reel/Da8mgYZFVeg/",
-    "https://www.instagram.com/reel/Dc4CQZgoPow/",
-    "https://www.instagram.com/reel/DdCD3iFBF1F/",
-    "https://www.instagram.com/reel/DbSUBltKWHr/",
-    "https://www.instagram.com/reel/DXu3edyiPfb/",
-    "https://www.instagram.com/reel/DdERsHDNXPQ/",
-    "https://www.instagram.com/reel/Dc7S584Bnoq/"
+  const WEEKS = [
+    {
+      label: "Semana del 23/09",
+      items: [
+        "https://www.instagram.com/reels/Dcln6atiG_U/",
+        "https://www.instagram.com/reels/DdeN1B7OPOr/",
+        "https://www.instagram.com/reels/DcWs8x-vMOg/",
+        "https://www.instagram.com/reels/DczYed5AUzJ/",
+        "https://www.instagram.com/reels/DcupmEEOEUt/",
+        "https://www.instagram.com/reels/DdaThmjMyfL/"
+      ]
+    },
+    {
+      label: "Semana del 16/09",
+      items: [
+        "https://www.instagram.com/reels/DZ27JgqNfoB/",
+        "https://www.instagram.com/reels/DcfOxhutYkE/",
+        "https://www.instagram.com/reel/DboNDarITAi/",
+        "https://www.instagram.com/reel/Da6B8hFNa19/",
+        "https://www.instagram.com/reel/Da8mgYZFVeg/",
+        "https://www.instagram.com/reel/Dc4CQZgoPow/",
+        "https://www.instagram.com/reel/DdCD3iFBF1F/",
+        "https://www.instagram.com/reel/DbSUBltKWHr/",
+        "https://www.instagram.com/reel/DXu3edyiPfb/",
+        "https://www.instagram.com/reel/DdERsHDNXPQ/",
+        "https://www.instagram.com/reel/Dc7S584Bnoq/"
+      ]
+    }
   ];
 
   function shortcode(url){
@@ -238,8 +268,18 @@
     mediaEl.innerHTML = `<iframe src="https://www.instagram.com/reel/${code}/embed/captioned/" width="${width}" height="${height}" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy"></iframe>`;
   }
 
-  const grid = document.getElementById('grid');
-  REELS.forEach((url, i) => grid.appendChild(buildCard(url, i)));
+  const weeksWrap = document.getElementById('weeks');
+  WEEKS.forEach(week => {
+    const heading = document.createElement('div');
+    heading.className = 'week-heading';
+    heading.innerHTML = week.label.replace(/(\d{2}\/\d{2})/, '<span>$1</span>');
+    weeksWrap.appendChild(heading);
+
+    const grid = document.createElement('div');
+    grid.className = 'grid';
+    week.items.forEach((url, i) => grid.appendChild(buildCard(url, i)));
+    weeksWrap.appendChild(grid);
+  });
 </script>
 
 </body>
