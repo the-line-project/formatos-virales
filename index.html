@@ -97,6 +97,18 @@
   .week-heading:first-of-type{border-top:none;padding-top:0;margin-top:8px;}
   .week-heading span{color:var(--orange);}
 
+  .format-info{padding:14px 16px 18px;border-top:1px solid var(--border);}
+  .format-name{
+    font-family:'Anton',sans-serif;
+    color:var(--white);
+    font-size:0.95rem;
+    text-transform:uppercase;
+    letter-spacing:0.3px;
+    margin-bottom:6px;
+  }
+  .format-desc{color:var(--gray);font-size:0.8rem;line-height:1.5;}
+  .format-desc b{color:var(--orange);font-weight:600;}
+
   .card{
     background:var(--card);
     border:1px solid var(--border);
@@ -204,7 +216,73 @@
 </div>
 
 <script>
+  const INFO = {
+    // 14/10
+    "DdkJK0wJ3nW": ["“Esto o esto” eliminatorio", "Dos opciones se enfrentan por ronda y vas eligiendo hasta que queda una.", "opciones de tu nicho (herramientas, métodos, productos) y elegí con un porqué."],
+    "DdExIq5RcKv": ["Reglas para… con veredicto", "Dos personas votan cada regla con una paleta verde o roja.", "“reglas para [tu cliente]” y votá cada una explicando por qué."],
+    "DePMTk0jCjk": ["Persona A vs. persona B", "Dos perfiles con el mismo punto de partida; los números muestran quién termina mejor.", "compará dos formas de hacer algo en tu rubro y ponele cifras."],
+    "DeVXRSRBD-g": ["Promesa con tiempo", "Un cronómetro en cuenta regresiva prometiendo resolver algo en 60 segundos.", "“en 60 s te explico X” con el cronómetro a la vista."],
+    "Dd2SvQoJH4U": ["¿Contratar o despedir?", "Cada situación se juzga con una paleta: contratar o despedir.", "casos de tu nicho (clientes, hábitos, errores) con un veredicto cada uno."],
+    "Dd1t9nNBx7L": ["Trivia con premio", "Preguntas por niveles de dificultad, con plata en juego, y el invitado responde.", "trivia de tu tema con alguien de tu nicho y un premio simbólico."],
+    "DdrIvcZscoY": ["Ranking por números", "Ítems ordenados por un dato concreto (calorías, precio, tiempo) mostrado en pantalla.", "elegí 5 a 10 ítems de tu nicho y ordenalos por un número."],
+    "DdRJVg4OYso": ["Noticia sorprendente explicada", "Un titular llamativo con imágenes de la noticia mientras la explicás.", "una novedad de tu sector y qué significa para tu audiencia."],
+    "Dd7TOk6J_tO": ["¿Quién es más probable…?", "Dos personas señalan quién es más probable en cada situación.", "hacelo con un socio, cliente o equipo, con situaciones de tu nicho."],
+    // 07/10
+    "DeAe2fVRQ7j": ["Pedido de cliente → resultado", "Muestra un pedido real y cómo se resuelve paso a paso en pantalla.", "un trabajo de tu rubro, desde el pedido hasta el resultado."],
+    "Dbv8AUWoAtg": ["Top 5 con íconos", "Lista numerada donde cada puesto se completa con una imagen al nombrarlo.", "un top 5 de tu nicho con un ícono por puesto."],
+    "DawP2gJj42O": ["No digas / Mejor decí", "Frases comunes frente a su versión mejorada.", "qué no decir y qué decir al hablar de tu rubro."],
+    "DdJd5DdjbnO": ["¿Qué herramienta para qué?", "Cada tipo de tarea con las herramientas recomendadas listadas con logos.", "categorías de tu nicho y tus opciones favoritas para cada una."],
+    "DcfXFOZsb_g": ["Plan semanal en íconos", "Cada día de la semana con el tipo de contenido que le toca.", "tu rutina semanal (contenido, entrenamiento, ventas) día por día."],
+    "DdFMe6fuzGA": ["Recursos que aparecen al nombrarlos", "Mientras hablás aparecen en pantalla los recursos que mencionás.", "mostrá cada herramienta o recurso de tu nicho justo cuando lo nombrás."],
+    "Dbitq37Ml75": ["Hook “A + B” + demo", "Arranca con dos íconos que suman un resultado y sigue con un tutorial en pantalla.", "combiná dos herramientas o ideas de tu nicho y mostrá lo que sale."],
+    "DbmMVTXtc4M": ["Concepto con B-roll + reacción", "Arriba un concepto con imágenes y texto, abajo alguien reaccionando.", "explicá una idea de tu nicho con B-roll y sumá una reacción."],
+    "DdEdI5vz-RF": ["5 recursos por categoría", "Cinco categorías con tres ejemplos cada una, mostradas al nombrarlas.", "tu selección de recursos o ideas de tu nicho por tipo."],
+    "DcUE2HGQmVO": ["Pedido → resultado visual", "Se escribe un pedido o comando y aparece el resultado (infografía, diseño) arriba.", "un pedido simple de tu nicho y el entregable que genera."],
+    // 30/09
+    "DdrKiDclXvb": ["No se dice / Se dice", "Dos columnas con la forma incorrecta y la correcta, que se van destapando.", "errores comunes de tu nicho y su versión correcta."],
+    "DcNT8jOt3lJ": ["Escala Malo / Regular / Bueno", "Ubica cada opción en una escala de tres niveles antes de mostrar la mejor.", "calificá opciones de tu nicho y revelá la ganadora."],
+    "DbwB5y8tBf5": ["Frase fuerte + escena de apoyo", "Un titular en recuadro y la persona hablando con imágenes que lo ilustran.", "una frase clave de tu nicho explicada con escenas de apoyo."],
+    "DdB-AFFgPef": ["Regla con números en pantalla", "Una regla simple explicada con montos que aparecen mientras hablás.", "tu método con porcentajes o cifras de ejemplo de tu rubro."],
+    "DdlmSPkyiHV": ["Paso a paso desde el celular", "Un hook con dos logos y los pasos numerados filmados desde el teléfono.", "un tutorial corto de 5 a 7 pasos con un título por paso."],
+    "DdWmIHTC322": ["¿Fact or Hype?", "Una novedad en pantalla con casilla de “verdad” o “exagerado” y tu veredicto.", "clasificá tendencias o mitos de tu nicho."],
+    "Dc1gz_ph1Y3": ["Muy tarde / Temprano / Ahora", "Tres columnas de momento y los ítems se ubican en cada una.", "clasificá herramientas, tendencias u oportunidades de tu nicho."],
+    "DccM4CeMMPR": ["B-roll + explicación", "Arriba imágenes con un título, abajo vos explicando.", "una estrategia de tu nicho con imágenes que la representen."],
+    // 23/09
+    "Dcln6atiG_U": ["Escala Mal / Bien / Perfecto", "Una tarjeta con tres niveles de lo mismo (frecuencia, cantidad).", "lo malo, lo bueno y lo ideal de algo de tu nicho."],
+    "DdeN1B7OPOr": ["Mensaje con B-roll simbólico", "Imágenes simbólicas arriba y vos hablando abajo con subtítulos grandes.", "un mensaje de tu nicho con imágenes que lo representen."],
+    "DcWs8x-vMOg": ["Si te pasa esto → necesitás esto", "De un lado el síntoma o antojo y del otro lo que realmente falta, con imágenes.", "señales de tu nicho y su causa real."],
+    "DczYed5AUzJ": ["Resultado primero + proceso", "Se muestra el resultado final y después los pasos en pantalla.", "tu proceso empezando por el resultado."],
+    "DcupmEEOEUt": ["Bracket eliminatorio", "Una llave de torneo donde las opciones se eliminan hasta quedar una.", "armá un bracket con opciones de tu nicho."],
+    "DdaThmjMyfL": ["Idea de negocio con B-roll", "Imágenes del producto o proceso mezcladas con vos explicando por qué conviene.", "mostrá tu producto o servicio en acción y explicá el porqué."],
+    // 16/09
+    "DZ27JgqNfoB": ["Señales → causa", "Cada síntoma aparece alrededor tuyo con su causa o solución.", "problemas típicos de tu nicho con su causa real."],
+    "DcfOxhutYkE": ["Ranking numerado con íconos", "Lista del 1 al 9 donde cada puesto se completa con un ícono al nombrarlo.", "un ranking de habilidades, errores o hábitos de tu nicho."],
+    "DboNDarITAi": ["¿Quién arregla? A vs. B", "Cada situación aparece como imagen y se asigna a un lado o al otro.", "casos de tu nicho que se reparten entre dos partes."],
+    "Da6B8hFNa19": ["Calificar del 1 al 10", "Un experto puntúa cada opción con un número grande en pantalla.", "calificá productos, métodos o herramientas de tu nicho con nota."],
+    "Da8mgYZFVeg": ["No se dice / Se dice", "Dos columnas con la forma incorrecta y la correcta, que se van destapando.", "errores comunes de tu nicho y su versión correcta."],
+    "Dc4CQZgoPow": ["Hincha / Deshincha", "Dos columnas opuestas y los ítems se acomodan según su efecto.", "“sirve / no sirve” o “sube / baja” con ítems de tu nicho."],
+    "DdCD3iFBF1F": ["Mejor herramienta por tarea", "Cada tarea con su herramienta ideal, mostrada con logos.", "tu stack recomendado por tarea en tu rubro."],
+    "DbSUBltKWHr": ["Bad / Good / Great", "Cada tarea con tres opciones calificadas de peor a mejor.", "tus opciones de tu nicho ordenadas por calidad."],
+    "DXu3edyiPfb": ["Tier list", "Logos que caen en niveles S, A, B… mientras justificás cada uno.", "una tier list de herramientas, marcas o métodos de tu nicho."],
+    "DdERsHDNXPQ": ["Todos los días / Semana / Mes", "Los ítems caen en columnas según cada cuánto conviene consumirlos.", "ítems de tu nicho clasificados por frecuencia o prioridad."],
+    "Dc7S584Bnoq": ["Demo paso a paso con resultado", "Un título intrigante y pasos con texto grande hasta el resultado final.", "mostrá cómo lograr algo de tu nicho en pocos pasos."]
+  };
+
   const WEEKS = [
+    {
+      label: "Semana del 14/10",
+      items: [
+        "https://www.instagram.com/reel/DdkJK0wJ3nW/",
+        "https://www.instagram.com/reel/DdExIq5RcKv/",
+        "https://www.instagram.com/reel/DePMTk0jCjk/",
+        "https://www.instagram.com/reel/DeVXRSRBD-g/",
+        "https://www.instagram.com/reel/Dd2SvQoJH4U/",
+        "https://www.instagram.com/reel/Dd1t9nNBx7L/",
+        "https://www.instagram.com/reel/DdrIvcZscoY/",
+        "https://www.instagram.com/reel/DdRJVg4OYso/",
+        "https://www.instagram.com/reel/Dd7TOk6J_tO/"
+      ]
+    },
     {
       label: "Semana del 07/10",
       items: [
@@ -280,6 +358,7 @@
         <div class="play"></div>
         <div class="media-label">Ver reel</div>
       </div>
+      ${INFO[code] ? `<div class="format-info"><div class="format-name">${INFO[code][0]}</div><div class="format-desc">${INFO[code][1]} <b>Adaptalo:</b> ${INFO[code][2]}</div></div>` : ''}
     `;
     const media = card.querySelector('.media');
     media.addEventListener('click', () => loadEmbed(media, code), { once:true });
